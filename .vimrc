@@ -14,6 +14,8 @@ set expandtab
 """""""""""""""""""
 " display/info
 
+colorscheme pablo
+
 " make it so your cursor is always in the middle of the buffer (if possible)
 set scrolloff=9999
 
@@ -30,25 +32,37 @@ set ruler
 syntax enable
 filetype plugin on
 
-colorscheme pablo
+
+""""""""""""""""""
+" statusline
 
 " always show statusline
 set laststatus=2
 
-" helpful statusline
-source git_functions.vim
-set statusline=
-set statusline+=%#MatchParen#
-set statusline+=(%{StatuslineGit()})
-set statusline+=%#LineNr#
-set statusline+=\ %f         " Path to the file
-set statusline+=%=        " Switch to the right side
-set statusline+=Line:
-set statusline+=%l        " Current line
-set statusline+=/         " Separator
-set statusline+=%L        " Total lines
-set statusline+=\ Col:%c  " Current column
+" statusline helper functions
+" both of these taken from https://shapeshed.com/vim-statuslines/
+function! GitBranch()
+    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+" return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+" return system("git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'")
 
+function! StatuslineGit()
+    let l:branchname = GitBranch()
+    return strlen(l:branchname) > 0?''.l:branchname.'':''
+endfunction
+
+set statusline=
+set statusline+=%#MatchParen#        " Set highlight scheme
+set statusline+=(%{StatuslineGit()}) " Print git branch
+set statusline+=%#LineNr#            " Set highlight scheme
+set statusline+=\ %f                 " Path to the file
+set statusline+=%=                   " Switch to the right side
+set statusline+=Line:
+set statusline+=%l                   " Current line
+set statusline+=/                    " Separator
+set statusline+=%L                   " Total lines
+set statusline+=\ Col:%c             " Current column
 
 
 """""""""""""""""""
@@ -94,3 +108,4 @@ hi Search guibg=peru guifg=wheat
 " convenient tab movement
 nnoremap tn :tabn<cr>
 nnoremap tp :tabp<cr>
+

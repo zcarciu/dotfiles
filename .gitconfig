@@ -1,0 +1,10 @@
+[user]
+    name = Zachary Carciu
+    email = zcarciu@gmail.com
+[alias]
+    l = log --oneline --decorate  --graph --name-only --color
+    coa = checkout -- .
+    d = diff --color
+    s = status
+    cm = commit -m
+    a = add -u .
