@@ -16,6 +16,9 @@ set expandtab
 
 colorscheme pablo
 
+" set search match color scheme
+hi Search guibg=peru guifg=wheat
+
 " make it so your cursor is always in the middle of the buffer (if possible)
 set scrolloff=9999
 
@@ -44,19 +47,18 @@ set laststatus=2
 function! GitBranch()
     return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
-" return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-" return system("git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'")
 
 function! StatuslineGit()
     let l:branchname = GitBranch()
     return strlen(l:branchname) > 0?''.l:branchname.'':''
 endfunction
 
+" status line documentation: http://learnvimscriptthehardway.stevelosh.com/chapters/17.html
 set statusline=
 set statusline+=%#MatchParen#        " Set highlight scheme
 set statusline+=(%{StatuslineGit()}) " Print git branch
 set statusline+=%#LineNr#            " Set highlight scheme
-set statusline+=\ %f                 " Path to the file
+set statusline+=\ %.40F              " Full path to the file (max width of 40 chars)
 set statusline+=%=                   " Switch to the right side
 set statusline+=Line:
 set statusline+=%l                   " Current line
@@ -69,7 +71,6 @@ set statusline+=\ Col:%c             " Current column
 " other stuff
 
 " For finding files (taken from https://github.com/changemewtf/no_plugins/blob/master/no_plugins.vim)
-" also a bunch of things below are there/his accompanying talk on youtube
 " Search down into subfolders
 " Provides tab completion for all file related tasks
 set path+=**
@@ -77,8 +78,7 @@ set path+=**
 " Both of below adapted from
 " https://vim.fandom.com/wiki/Move_to_next/previous_line_with_same_indentation
  
-" Find next char in current column (useful for jumping from if to else in
-" python)
+" Find next char in current column (useful for jumping from if to else in python)
 nnoremap <C-n> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 " Find previous in current column
 nnoremap <C-p> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
@@ -103,7 +103,6 @@ function! CSVH(colnr)
 endfunction
 command! -nargs=1 Csv :call CSVH(<args>)
 
-hi Search guibg=peru guifg=wheat
 
 " convenient tab movement
 nnoremap tn :tabn<cr>
