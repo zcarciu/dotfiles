@@ -60,7 +60,8 @@ set statusline+=(%{StatuslineGit()}) " Print git branch
 set statusline+=%#LineNr#            " Set highlight scheme
 set statusline+=\ %.40F              " Full path to the file (max width of 40 chars)
 set statusline+=%=                   " Switch to the right side
-set statusline+=Line:
+set statusline+=Buf:%n               " Buffer number
+set statusline+=\ Line:              " Label
 set statusline+=%l                   " Current line
 set statusline+=/                    " Separator
 set statusline+=%L                   " Total lines
