@@ -31,5 +31,17 @@ link() {
     fi
 }
 
+install_git() {
+    echo "This utility will install the git plugins"
+    echo "Proceed? (y/n)"
+    read resp
+    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+        sh git.exclude.sh
+    else
+        echo "Git plugin installations cancelled by user"
+    fi
+}
+
 install_packages
 link
+install_git

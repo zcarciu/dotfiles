@@ -11,6 +11,13 @@ set tabstop=4
 set expandtab
 
 
+
+""""""""""""""""""
+" pathogen
+execute pathogen#infect()
+
+
+
 """""""""""""""""""
 " display/info
 
@@ -30,6 +37,7 @@ set relativenumber
 
 " show column/line number
 set ruler
+
 
 " I forget why these are here
 syntax enable
