@@ -20,7 +20,7 @@ install_packages() {
 }
 
 link() {
-    echo "This will install useful utilities using apt"
+    echo "This utility will symlink the files in this repo to the home directory"
     echo "Proceed? (y/n)"
     read resp
     if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
