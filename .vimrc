@@ -37,7 +37,7 @@ set scrolloff=9999
 set showmode
 
 " numbers relative to the cursor
-set relativenumber
+set relativenumber number
 
 
 " I forget why these are here
@@ -85,6 +85,23 @@ set statusline+=\ Col:%c             " Current column
 " Provides tab completion for all file related tasks
 set path+=**
 
+" Display all matching files when we tab complete
+set wildmenu
+
+" netrw (vim's built-in filesystem - ':help netrw')
+let g:netrw_liststyle = 3
+
+
+""""""""""""""""""
+" Mappings
+
+" toggle number/nonumber (useful for copy/pasting) 
+nnoremap <Leader>N :set relativenumber number <CR>
+nnoremap <Leader>n :set norelativenumber norelativenumber <CR>
+
+" map kj to <Esc
+inoremap kj <Esc>
+
 " open vimrc
 " can't use ctrl-c in normal mode anyway
 nnoremap <C-c> :edit ~/.vimrc <CR
@@ -103,9 +120,8 @@ nnoremap <C-p> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . lin
 nnoremap tn :tabn<cr>
 nnoremap tp :tabp<cr>
 
+inoremap <Leader>] import ipdb; ipdb.set_trace()
 
-" netrw (vim's built-in filesystem - ':help netrw')
-let g:netrw_liststyle = 3
 
 
 
@@ -160,4 +176,11 @@ function! VRow()
 endfunction
 
 command! ViewRow :call VRow()
+
+
+try
+    source ~/.vimrc.local
+catch
+    " Ignore if file doesn't exist
+endtry
 
