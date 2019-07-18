@@ -1,2 +1,4 @@
 .vim/*
 *.swp
+# local configurations
+*.local

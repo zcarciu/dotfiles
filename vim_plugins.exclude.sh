@@ -28,3 +28,13 @@ else
     vim -u NONE -c "helptags vim-surround/doc" -c q
 fi
 
+
+# install commentary
+if [ -d .vim/bundle/vim-commentary ]
+    then
+    echo "vim-commentary is already installed"
+else
+    git clone https://github.com/tpope/vim-commentary.git .vim/bundle/vim-commentary
+    vim -u NONE -c "helptags vim-commentary/doc" -c q
+fi
+
