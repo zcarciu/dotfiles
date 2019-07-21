@@ -43,5 +43,5 @@ install_vim_plugins() {
 }
 
 install_packages
-link
 install_vim_plugins
+link
