@@ -15,20 +15,16 @@ set expandtab
 " https://stackoverflow.com/a/2514520
 set pastetoggle=<F2>
 
+let mapleader = "\\"
+inoremap <Leader>] import ipdb; ipdb.set_trace()
 
 """"""""""""""""""
 " pathogen
 execute pathogen#infect()
 
 
-
 """""""""""""""""""
 " display/info
-
-colorscheme desert
-
-" set search match color scheme
-hi Search guibg=peru guifg=wheat
 
 " make it so your cursor is always in the middle of the buffer (if possible)
 set scrolloff=9999
@@ -37,12 +33,16 @@ set scrolloff=9999
 set showmode
 
 " numbers relative to the cursor
-set relativenumber
+set number
 
 
 " I forget why these are here
 syntax enable
 filetype plugin on
+
+
+" Used when tab completing :find
+set wildmenu
 
 
 """"""""""""""""""
@@ -87,7 +87,7 @@ set path+=**
 
 " open vimrc
 " can't use ctrl-c in normal mode anyway
-nnoremap <C-c> :edit ~/.vimrc <CR
+nnoremap <C-c> :edit ~/.vimrc <CR>
 
 
 " Both of below adapted from
@@ -161,3 +161,14 @@ endfunction
 
 command! ViewRow :call VRow()
 
+
+" The below function was taken from https://devel.tech/snippets/n/vIIMz8vZ/load-vim-source-files-only-if-they-exist/
+" Function to source only if file exists {
+function! SourceIfExists(file)
+  if filereadable(expand(a:file))
+    exe 'source' a:file
+  endif
+endfunction
+" } 
+
+call SourceIfExists("~/.vimrc.local")

@@ -11,3 +11,12 @@ alias h=history
 
 alias branch="git status | head -n 1 | cut -d' ' -f4-"
 
+alias ll="ls -lrth"
+alias lla="ls -lrthA"
+
+alias nose="nosetests -s"
+if [ -f $HOME/.bash_aliases.local ]
+    then
+    source $HOME/.bash_aliases.local
+fi
+
