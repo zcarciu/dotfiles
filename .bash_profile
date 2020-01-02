@@ -1,3 +1,5 @@
+source ~/.bashrc
+source ~/.exports
 source ~/.bash_aliases
 
 parse_git_branch() {
