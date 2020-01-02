@@ -26,13 +26,17 @@ execute pathogen#infect()
 """""""""""""""""""
 " display/info
 
+colorscheme koehler
+
+" set search match color scheme
+hi Search guibg=peru guifg=wheat
+
 " make it so your cursor is always in the middle of the buffer (if possible)
 set scrolloff=9999
 
 " show if you are in insert/visual mode
 set showmode
 
-" numbers relative to the cursor
 set number
 
 
@@ -41,40 +45,38 @@ syntax enable
 filetype plugin on
 
 
-" Used when tab completing :find
 set wildmenu
 
+"""""""""""""""""""
+"" statusline
 
-""""""""""""""""""
-" statusline
+"" always show statusline
+"set laststatus=2
 
-" always show statusline
-set laststatus=2
+"" statusline helper functions
+"" both of these taken from https://shapeshed.com/vim-statuslines/
+"function! GitBranch()
+"    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+"endfunction
 
-" statusline helper functions
-" both of these taken from https://shapeshed.com/vim-statuslines/
-function! GitBranch()
-    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
+"function! StatuslineGit()
+"    let l:branchname = GitBranch()
+"    return strlen(l:branchname) > 0?''.l:branchname.'':''
+"endfunction
 
-function! StatuslineGit()
-    let l:branchname = GitBranch()
-    return strlen(l:branchname) > 0?''.l:branchname.'':''
-endfunction
-
-" status line documentation: http://learnvimscriptthehardway.stevelosh.com/chapters/17.html
-set statusline=
-set statusline+=%#MatchParen#        " Set highlight scheme
-set statusline+=(%{StatuslineGit()}) " Print git branch
-set statusline+=%#LineNr#            " Set highlight scheme
-set statusline+=\ %.40F              " Full path to the file (max width of 40 chars)
-set statusline+=%=                   " Switch to the right side
-set statusline+=Buf:%n               " Buffer number
-set statusline+=\ Line:              " Label
-set statusline+=%l                   " Current line
-set statusline+=/                    " Separator
-set statusline+=%L                   " Total lines
-set statusline+=\ Col:%c             " Current column
+"" status line documentation: http://learnvimscriptthehardway.stevelosh.com/chapters/17.html
+"set statusline=
+"set statusline+=%#MatchParen#        " Set highlight scheme
+"set statusline+=(%{StatuslineGit()}) " Print git branch
+"set statusline+=%#LineNr#            " Set highlight scheme
+"set statusline+=\ %.40F              " Full path to the file (max width of 40 chars)
+"set statusline+=%=                   " Switch to the right side
+"set statusline+=Buf:%n               " Buffer number
+"set statusline+=\ Line:              " Label
+"set statusline+=%l                   " Current line
+"set statusline+=/                    " Separator
+"set statusline+=%L                   " Total lines
+"set statusline+=\ Col:%c             " Current column
 
 
 """""""""""""""""""
@@ -84,6 +86,19 @@ set statusline+=\ Col:%c             " Current column
 " Search down into subfolders
 " Provides tab completion for all file related tasks
 set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+
+" netrw (vim's built-in filesystem - ':help netrw')
+let g:netrw_liststyle = 3
+
+
+""""""""""""""""""
+" Mappings
+
+" map kj to <Esc
+inoremap kj <Esc>
 
 " open vimrc
 " can't use ctrl-c in normal mode anyway
@@ -103,9 +118,8 @@ nnoremap <C-p> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . lin
 nnoremap tn :tabn<cr>
 nnoremap tp :tabp<cr>
 
+inoremap <Leader>] import ipdb; ipdb.set_trace()
 
-" netrw (vim's built-in filesystem - ':help netrw')
-let g:netrw_liststyle = 3
 
 
 
@@ -172,3 +186,7 @@ endfunction
 " } 
 
 call SourceIfExists("~/.vimrc.local")
+
+nnoremap Y y$
+map H ^
+map L $
