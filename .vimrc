@@ -25,7 +25,7 @@ execute pathogen#infect()
 """""""""""""""""""
 " display/info
 
-colorscheme desert
+colorscheme koehler
 
 " set search match color scheme
 hi Search guibg=peru guifg=wheat
@@ -36,8 +36,8 @@ set scrolloff=9999
 " show if you are in insert/visual mode
 set showmode
 
-" numbers relative to the cursor
-set relativenumber number
+" Show line numbers
+set number
 
 
 " I forget why these are here
@@ -45,36 +45,36 @@ syntax enable
 filetype plugin on
 
 
-""""""""""""""""""
-" statusline
+"""""""""""""""""""
+"" statusline
 
-" always show statusline
-set laststatus=2
+"" always show statusline
+"set laststatus=2
 
-" statusline helper functions
-" both of these taken from https://shapeshed.com/vim-statuslines/
-function! GitBranch()
-    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
+"" statusline helper functions
+"" both of these taken from https://shapeshed.com/vim-statuslines/
+"function! GitBranch()
+"    return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+"endfunction
 
-function! StatuslineGit()
-    let l:branchname = GitBranch()
-    return strlen(l:branchname) > 0?''.l:branchname.'':''
-endfunction
+"function! StatuslineGit()
+"    let l:branchname = GitBranch()
+"    return strlen(l:branchname) > 0?''.l:branchname.'':''
+"endfunction
 
-" status line documentation: http://learnvimscriptthehardway.stevelosh.com/chapters/17.html
-set statusline=
-set statusline+=%#MatchParen#        " Set highlight scheme
-set statusline+=(%{StatuslineGit()}) " Print git branch
-set statusline+=%#LineNr#            " Set highlight scheme
-set statusline+=\ %.40F              " Full path to the file (max width of 40 chars)
-set statusline+=%=                   " Switch to the right side
-set statusline+=Buf:%n               " Buffer number
-set statusline+=\ Line:              " Label
-set statusline+=%l                   " Current line
-set statusline+=/                    " Separator
-set statusline+=%L                   " Total lines
-set statusline+=\ Col:%c             " Current column
+"" status line documentation: http://learnvimscriptthehardway.stevelosh.com/chapters/17.html
+"set statusline=
+"set statusline+=%#MatchParen#        " Set highlight scheme
+"set statusline+=(%{StatuslineGit()}) " Print git branch
+"set statusline+=%#LineNr#            " Set highlight scheme
+"set statusline+=\ %.40F              " Full path to the file (max width of 40 chars)
+"set statusline+=%=                   " Switch to the right side
+"set statusline+=Buf:%n               " Buffer number
+"set statusline+=\ Line:              " Label
+"set statusline+=%l                   " Current line
+"set statusline+=/                    " Separator
+"set statusline+=%L                   " Total lines
+"set statusline+=\ Col:%c             " Current column
 
 
 """""""""""""""""""
@@ -95,16 +95,12 @@ let g:netrw_liststyle = 3
 """"""""""""""""""
 " Mappings
 
-" toggle number/nonumber (useful for copy/pasting) 
-nnoremap <Leader>N :set relativenumber number <CR>
-nnoremap <Leader>n :set norelativenumber norelativenumber <CR>
-
 " map kj to <Esc
 inoremap kj <Esc>
 
 " open vimrc
 " can't use ctrl-c in normal mode anyway
-nnoremap <C-c> :edit ~/.vimrc <CR
+nnoremap <C-c> :edit ~/.vimrc <CR>
 
 
 " Both of below adapted from
@@ -178,9 +174,17 @@ endfunction
 command! ViewRow :call VRow()
 
 
-try
-    source ~/.vimrc.local
-catch
-    " Ignore if file doesn't exist
-endtry
+" The below function was taken from https://devel.tech/snippets/n/vIIMz8vZ/load-vim-source-files-only-if-they-exist/
+" Function to source only if file exists {
+function! SourceIfExists(file)
+  if filereadable(expand(a:file))
+    exe 'source' a:file
+  endif
+endfunction
+" } 
 
+call SourceIfExists("~/.vimrc.local")
+
+nnoremap Y y$
+map H ^
+map L $
