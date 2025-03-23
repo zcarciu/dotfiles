@@ -1,0 +1,5 @@
+export PYTHONSTARTUP=~/.pythonrc
+export HISTTIMEFORMAT="%d/%m/%y %T "
+export HISTFILESIZE=100000
+export HISTSIZE=100000
+export HISTCONTROL="erasedups:ignoreboth"
